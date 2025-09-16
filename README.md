@@ -1,2 +1,3 @@
 # ami-jenkins
-This repo holds the AMIs for jenkins
+
+TODO: Update Readme with instructions for using Packer
