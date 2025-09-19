@@ -16,11 +16,20 @@
 !/jobs
 !/.gitignore
 !/*.xml
+!/*.md
+!/*.github
+!/packer
+!/scripts
+!/jenkins
+!/*.pkr.hcl
 
 # Ignore all files in jobs subdirectories except for folders.
 # Note: git doesn't track folders, only file content.
 jobs/**
 !jobs/**/
+
+#Ignore variables.pkr files
+variables.pkrvars.hcl
 
 # Uncomment the following line to save next build numbers with config.
 
