@@ -4,9 +4,12 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
-  packer_check:
+  packer-check:
     name: "Packer format and validation check"
     runs-on: ubuntu-latest
 
@@ -31,7 +34,7 @@ jobs:
         run: packer init .
 
       - name: Format packer
-        run: packer fmt -check -revursive .
+        run: packer fmt -check -recursive .
 
       - name: Validate packer
-        run: packer validate -var-file=variables.pkrvars.hcl .
+        run: packer validate -var-file=./variables.pkrvars.hcl .
