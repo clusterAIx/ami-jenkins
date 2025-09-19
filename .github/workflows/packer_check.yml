@@ -54,4 +54,4 @@ jobs:
             -var "instance_type=${INSTANCE_TYPE}" \
             -var "ssh_username=${SSH_USERNAME}" \
             -var "ami_name=${AMI_NAME}" \
-            ./packer/jenkins.pkr.hcl
+            .aws-ubuntu.pkr.hcl
