@@ -1,0 +1,37 @@
+name: Packer Status Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  packer_check:
+    name: "Packer format and validation check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: create variables
+        run: |
+          cat <<EOF > variables.pkrvars.hcl
+          aws_source_ami = "${{ secrets.AWS_SOURCE_AMI }}"
+          ami_name       = "${{ secrets.AMI_NAME }}"
+          instance_type  = "${{ secrets.INSTANCE_TYPE }}"
+          aws_region     = "${{ secrets.AWS_REGION }}"
+          ssh_username   = "${{ secrets.SSH_USERNAME }}"
+          EOF
+
+      - name: Set up packer
+        uses: hashicorp/setup-packer@v3
+
+      - name: Initialize packer
+        run: packer init .
+
+      - name: Format packer
+        run: packer fmt -check -revursive .
+
+      - name: Validate packer
+        run: packer validate -var-file=variables.pkrvars.hcl .
