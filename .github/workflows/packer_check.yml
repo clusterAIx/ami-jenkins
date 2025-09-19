@@ -40,5 +40,18 @@ jobs:
       - name: Format packer
         run: packer fmt -check -recursive .
 
-      - name: Validate packer
-        run: packer validate -var-file=variables.pkrvars.hcl .
+      - name: Run Packer Validate
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SOURCE_AMI: ${{ secrets.AWS_SOURCE_AMI }}
+          INSTANCE_TYPE: ${{ secrets.INSTANCE_TYPE }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          AMI_NAME: ${{ secrets.AMI_NAME }}
+        run: |
+          packer validate \
+            -var "aws_region=${AWS_REGION}" \
+            -var "aws_source_ami=${AWS_SOURCE_AMI}" \
+            -var "instance_type=${INSTANCE_TYPE}" \
+            -var "ssh_username=${SSH_USERNAME}" \
+            -var "ami_name=${AMI_NAME}" \
+            ./packer/jenkins.pkr.hcl
