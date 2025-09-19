@@ -17,6 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Debug secrets
+        run: |
+          echo "AWS_REGION=${{ secrets.AWS_REGION }}"
+
       - name: create variables
         run: |
           cat <<EOF > variables.pkrvars.hcl
