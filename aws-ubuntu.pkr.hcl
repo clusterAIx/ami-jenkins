@@ -9,11 +9,26 @@ packer {
   }
 }
 
-variable "aws_source_ami" { type = string }
-variable "ami_name" { type = string }
-variable "instance_type" { type = string }
-variable "aws_region" { type = string }
-variable "ssh_username" { type = string }
+variable "aws_source_ami" {
+  type    = string
+  default = "ami-0360c520857e3138f"
+}
+variable "ami_name" {
+  type    = string
+  default = "jenkins_ami"
+}
+variable "instance_type" {
+  type    = string
+  default = "t2.micro"
+}
+variable "aws_region" {
+  type    = string
+  default = "us-east-1"
+}
+variable "ssh_username" {
+  type    = string
+  default = "ubuntu"
+}
 
 source "amazon-ebs" "ubuntu" {
   ami_name        = "${var.ami_name}-${formatdate("YYYY_MM_DD_HHmmss", timestamp())}"
