@@ -1,12 +1,6 @@
-build {
-
-    provisioner "shell" {
-
-    }
-}
-
-
 packer {
+  required_version = ">= 1.7.0"
+
   required_plugins {
     amazon = {
       version = ">= 1.0.0, <2.0.0"
@@ -16,23 +10,24 @@ packer {
 }
 
 variable "aws_source_ami" {
-  type = string
+  type    = string
+  default = "ami-0360c520857e3138f"
 }
-
 variable "ami_name" {
-  type = string
+  type    = string
+  default = "jenkins_ami"
 }
-
 variable "instance_type" {
-  type = string
+  type    = string
+  default = "t2.micro"
 }
-
 variable "aws_region" {
-  type = string
+  type    = string
+  default = "us-east-1"
 }
-
 variable "ssh_username" {
-  type = string
+  type    = string
+  default = "ubuntu"
 }
 
 source "amazon-ebs" "ubuntu" {
@@ -58,11 +53,10 @@ source "amazon-ebs" "ubuntu" {
 }
 
 build {
-  name = "jenkins-ami"
-  sources = [
-    "source.amazon-ebs.ubuntu"
-  ]
+  name    = "jenkins-ami"
+  sources = ["source.amazon-ebs.ubuntu"]
 
   provisioner "shell" {
     script = "scripts/setup.sh"
   }
+}
