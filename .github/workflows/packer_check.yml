@@ -48,4 +48,10 @@ jobs:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           AMI_NAME: ${{ secrets.AMI_NAME }}
         run: |
-          packer validate .
+          packer validate \
+            -var "aws_region=${AWS_REGION}" \
+            -var "aws_source_ami=${AWS_SOURCE_AMI}" \
+            -var "instance_type=${INSTANCE_TYPE}" \
+            -var "ssh_username=${SSH_USERNAME}" \
+            -var "ami_name=${AMI_NAME}" \
+            ./aws-ubuntu.pkr.hcl
